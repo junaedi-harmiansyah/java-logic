@@ -1,7 +1,11 @@
-public class BukaLapakTest {
+package com.java.codility;
+
+
+//test di buka lapak , penyisipan abjad berdasarkan jumlah angka inputan
+public class BL {
 
 	public static void main(String[] args) {
-		BukaLapakTest jwb = new BukaLapakTest();
+		BL jwb = new BL();
 		jwb.answer(5, 4);
 	}
 
