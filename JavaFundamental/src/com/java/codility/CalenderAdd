@@ -1,0 +1,39 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class CalenderAdd {
+
+	public static void main(String[] args) {
+		String[] days = { "senin", "selasa", "rabu", "kamis", "jumat", "sabtu",
+				"minggu" };
+		String day = "senin";
+		Integer addDays = 3;
+		System.out.println(addDaysResult(days, addDays, day));
+	}
+
+	private static String addDaysResult(String[] days, Integer addDays,
+			String day) {
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		int isCek = 0;
+		int isAdd = 0;
+		int isResult = 0;
+		for (int i = 0; i < days.length; i++) {
+			map.put(i, days[i]);
+			if (days[i].equalsIgnoreCase(day)) {
+
+				if (addDays > 6) {
+					isAdd = addDays % 7;
+				} else {
+					isAdd = addDays;
+				}
+				isCek = i + isAdd;
+				if (isCek > 6) {
+					isResult = isCek % 7;
+				} else {
+					isResult = isCek;
+				}
+			}
+		}
+		return map.get(isResult);
+	}
+}
