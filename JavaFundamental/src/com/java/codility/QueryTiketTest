@@ -1,0 +1,12 @@
+
+public class QueryTiketTest {
+	
+	
+	/*
+	 * select ply.id, ply.title, CASE WHEN sum(res.number_of_tickets)>0 THEN
+	 * sum(res.number_of_tickets) ELSE 0 END AS reserved_tickets from public.plays
+	 * ply left join public.reservations res on ply.id = res.play_id group by
+	 * ply.id, ply.title order by reserved_tickets desc
+	 */
+
+}
