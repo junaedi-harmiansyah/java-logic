@@ -1,0 +1,80 @@
+import java.util.Stack;
+import java.util.regex.Pattern;
+
+public class BitmapHoles {
+
+	public static String BitmapHoles(String[] strArr) {
+		Integer row = strArr.length;
+		Integer coun = 1;
+		String[][] arr = new String[row][5];
+		for (int i = 0; i < row; i++) {
+			cek(strArr, strArr[i], i, arr);
+		}
+		Stack<String> stack = new Stack<String>();
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				if (i == 0 && j == 0 && arr[i][j].matches("[0]")) {
+					coverHoleLo(arr, i, j, coun++);
+				} else if (i + 1 == arr.length && j + 1 == arr[i].length && (arr[i][j].matches("[0]"))) {
+					coverHoleHi(arr, i, j, coun++);
+				} else {
+					coverHoleAv(arr, i, j, coun++);
+				}
+			}
+		}
+		coun = -2;
+		return coun.toString();
+	}
+
+	private static void coverHoleLo(String[][] arr, int i, int j, Integer coun) {
+		if (arr[i][j+coun].matches("[0]")) {
+			coverHoleLo(arr, i, j, coun);
+		}
+		return;
+
+	}
+	private static void coverHoleHi(String[][] arr, int i, int j, Integer coun) {
+		if (arr[i][j-coun].matches("[0]")) {
+			coverHoleHi(arr, i, j, coun);
+		}
+		return;
+
+	}
+	private static void coverHoleAv(String[][] arr, int i, int j, Integer coun) {
+		if (arr[i][j+coun].matches("[0]")) {
+			coverHoleAv(arr, i, j, coun);
+		}
+		if (arr[i][j-coun].matches("[0]")) {
+			coverHoleAv(arr, i, j, coun);
+		}
+		return;
+
+	}
+
+	private static String[][] cek(String[] strArr, String row, int colm, String[][] arr) {
+		StringBuilder str = new StringBuilder();
+		StringBuilder strRow = new StringBuilder();
+		for (int i = 0; i < row.length(); i++) {
+			str.append(row.charAt(i) + ",");
+			if (i == colm) {
+				strRow.append(row.charAt(i) + ",");
+			}
+
+		}
+		String[] str_Array = null;
+		Pattern pattern = Pattern.compile(",");
+		str_Array = pattern.split(str);
+
+		for (int j = 0; j < str_Array.length; j++) {
+			arr[colm][j] = str_Array[j];
+		}
+
+		return arr;
+
+	}
+
+	public static void main(String[] args) {
+		String[] a = { "01111", "01101", "00011", "11110" };
+		System.out.print(BitmapHoles(a));
+	}
+}
