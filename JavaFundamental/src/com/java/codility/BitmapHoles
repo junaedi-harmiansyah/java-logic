@@ -1,57 +1,74 @@
-import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class BitmapHoles {
+	private static Integer rCek = 0;
+	private static Integer rResult = 1;
+	private static Integer countRow = 1;
+	private static Integer countCol = 1;
+	private static Boolean isCek=true;
 
 	public static String BitmapHoles(String[] strArr) {
 		Integer row = strArr.length;
 		Integer coun = 1;
+		Integer result = 0;
+		Integer r = 0;
 		String[][] arr = new String[row][5];
 		for (int i = 0; i < row; i++) {
 			cek(strArr, strArr[i], i, arr);
 		}
-		Stack<String> stack = new Stack<String>();
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[i].length; j++) {
-				if (i == 0 && j == 0 && arr[i][j].matches("[0]")) {
-					coverHoleLo(arr, i, j, coun++);
-				} else if (i + 1 == arr.length && j + 1 == arr[i].length && (arr[i][j].matches("[0]"))) {
-					coverHoleHi(arr, i, j, coun++);
-				} else {
-					coverHoleAv(arr, i, j, coun++);
+				int jj = j;
+				if (arr[i][j].matches("[0]")) {
+					result = coverHoleLo(arr, i, j, coun, jj);
+					
+
+					r = Math.max(r, result);
+					coun = 1;
+					isCek =true;
 				}
 			}
 		}
-		coun = -2;
-		return coun.toString();
+
+		return r.toString();
 	}
 
-	private static void coverHoleLo(String[][] arr, int i, int j, Integer coun) {
-		if (arr[i][j+coun].matches("[0]")) {
-			coverHoleLo(arr, i, j, coun);
+
+	public  static Integer coverHoleLo(String[][] arr, int i, int j, Integer coun,
+			int jj) {
+		
+		if ((j + 1) == arr[i].length) {
+
+		} else {
+			if (arr[i][j + 1].matches("[0]") && isCek) {
+				countRow++;
+				int h = j + 1;
+				rCek = Math.max(rCek, countRow);
+				coverHoleLo(arr, i, h, countRow, jj);
+
+			}
+
+			if (i > 0) {
+				if (arr[i - 1][jj].matches("[0]")) {
+					countCol++;
+					int z = i - 1;
+					if (z >= 0) {
+						rCek = Math.max(rCek, countCol);
+						isCek =false;
+						coverHoleLo(arr, z, jj, countCol, jj);
+						
+					}
+
+				}
+			}
 		}
-		return;
+		rResult = Math.max(rResult, rCek);
+		return rResult;
 
 	}
-	private static void coverHoleHi(String[][] arr, int i, int j, Integer coun) {
-		if (arr[i][j-coun].matches("[0]")) {
-			coverHoleHi(arr, i, j, coun);
-		}
-		return;
 
-	}
-	private static void coverHoleAv(String[][] arr, int i, int j, Integer coun) {
-		if (arr[i][j+coun].matches("[0]")) {
-			coverHoleAv(arr, i, j, coun);
-		}
-		if (arr[i][j-coun].matches("[0]")) {
-			coverHoleAv(arr, i, j, coun);
-		}
-		return;
-
-	}
-
-	private static String[][] cek(String[] strArr, String row, int colm, String[][] arr) {
+	private static String[][] cek(String[] strArr, String row, int colm,
+			String[][] arr) {
 		StringBuilder str = new StringBuilder();
 		StringBuilder strRow = new StringBuilder();
 		for (int i = 0; i < row.length(); i++) {
@@ -74,7 +91,7 @@ public class BitmapHoles {
 	}
 
 	public static void main(String[] args) {
-		String[] a = { "01111", "01101", "00011", "11110" };
+		String[] a = { "01101", "00001" };
 		System.out.print(BitmapHoles(a));
 	}
 }
