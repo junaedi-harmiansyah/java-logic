@@ -1,0 +1,61 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class BitmapHolesLatest {
+
+	 public static void main(String[] args) {
+	        String[] a = { "01101", "01100","10101" };
+	        solution(a);
+	    }
+
+	    private static void solution(String[] array){
+	        System.out.println("arayparam length : " +array[0].length());
+	        final String MATCH_PATTERN = "0";
+	        Map<String,Integer> mapX = new HashMap<String,Integer>();
+	        Map<String,Integer> mapY = new HashMap<String,Integer>();
+
+	        int x1 = 0;
+	        int y1 = 0;
+
+	        for(int i = 0;i<array.length;i++){
+	            System.out.println("array ke "+ i +" : "+array[i]);
+	            for(int j = 0;j<array[i].length();j++){
+	                String tmpValy = array[i].substring(j,j+1);
+	                if(MATCH_PATTERN.equals(tmpValy)){
+	                    if(mapY.get("y") == null){
+	                        mapY.put("y",1);
+	                    }else{
+	                        mapY.put("y",mapY.get("y")+1);
+	                    }
+
+	                    //carix
+	                    if(mapX.get("key"+j) == null){
+	                        mapX.put("key"+j,1);
+	                    }else{
+	                        mapX.put("key"+j,mapX.get("key"+j)+1);
+	                    }
+
+	                    //calculate
+	                    if(x1< mapX.get("key"+j)){
+	                        x1 = mapX.get("key"+j);
+	                    }
+
+	                }else{
+	                    if(mapY.get("y") != null){
+	                        if(y1< mapY.get("y")){
+	                            y1 = mapY.get("y");
+	                        }
+	                    }
+	                    mapY = new HashMap<String, Integer>();
+	                    mapX.put("key"+j,null);
+	                }
+
+	            }
+	        }
+	        System.out.println("hasil y1 : "+y1);
+	        System.out.println("hasil x1 : "+x1);
+	        Integer finalResult = x1 < y1 ? y1 : x1;
+	        System.out.println("final result : "+finalResult);
+	    }
+}
