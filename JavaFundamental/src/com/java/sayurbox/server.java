@@ -2,23 +2,16 @@ package com.java.sayurbox;
 
 import java.util.Scanner;
 
-/**
- * @author Junaedi Harmiansyah
- * Date : 5- may - 2021
- */
-public class Server {
+public class server {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("Masukan Jumlah Tugas");
 		int countTask = scan.nextInt();
-		System.out.println("Masukan Batas Waktu");
 		int timeTask = scan.nextInt();
 		
 		//create object array type integer from size array based count task
 		int[] nums = new int[countTask];
-		System.out.println("Masukan Lama Waktu Tugas sebanyak "+countTask);
 		
 		//mapping time task in array 
 		for (int i = 0; i < countTask; i++)
@@ -34,7 +27,7 @@ public class Server {
 				count++;
 		}
 		
-		System.out.println("Tugas yang bisa di handel sebanyak ="+count);
+		System.out.println(count);
 
 		scan.close();
 	}
